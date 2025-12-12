@@ -6,7 +6,9 @@ class Logic(QMainWindow, Ui_MainWindow):
 
     def __init__(self) -> None:
         """
-        Function initialization
+        Function initialization, sets up main window and button clicks
+
+        :return: None
         """
         super().__init__()
         self.setupUi(self)
@@ -29,13 +31,18 @@ class Logic(QMainWindow, Ui_MainWindow):
         :param rating: rating of movie must be a integer
         :return: Returns True if the condition is satisfied, false otherwise
         """
-        if genre == "" or title == "" or watch == "" or rating == "":
-            self.label_error.setText("All fields are required")
-            return False
+        try:
 
-        if not rating.isdigit():
-            self.label_error.setText("Rating needs to be a number")
-            return False
+            if genre == "" or title == "" or watch == "" or rating == "":
+                self.label_error.setText("All fields are required")
+                return False
+
+            if not rating.isdigit():
+                raise ValueError
+
+        except ValueError:
+                self.label_error.setText("Rating needs to be a number")
+                return False
 
         return True
 
